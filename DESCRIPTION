@@ -1,5 +1,5 @@
-Package: BuildABiocWorkshop2020
-Title: Bioconductor Workshop Template and Github Actions
+Package: QFeaturesWorkshop2020
+Title: QFeatures EuroBioc2020 Workshop
 Version: 0.1.1
 Authors@R: 
     person(given = "Laurent",
@@ -35,4 +35,4 @@ Suggests:
 URL: https://github.com/lgatto/QFeaturesWorkshop2020
 BugReports: https://github.com/lgatto/QFeaturesWorkshop2020/issues/new/choose
 VignetteBuilder: knitr
-DockerImage: seandavi/buildabiocworkshop2020:latest
+DockerImage: lgatto/qfeaturesworkshop2020:latest
