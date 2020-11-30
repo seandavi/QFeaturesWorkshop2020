@@ -1,6 +1,6 @@
 Package: QFeaturesWorkshop2020
 Title: QFeatures EuroBioc2020 Workshop
-Version: 0.1.1
+Version: 0.1.0
 Authors@R: 
     person(given = "Laurent",
            family = "Gatto",
