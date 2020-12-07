@@ -27,7 +27,8 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
 Depends: 
-    SummarizedExperiment, MultiAssayExperiment, QFeatures
+    SummarizedExperiment, MultiAssayExperiment, QFeatures, msdata, 
+    factoextra, tidyverse, patchwork, limma
 Suggests: 
     knitr,
     rmarkdown,
