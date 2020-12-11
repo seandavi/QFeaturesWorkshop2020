@@ -33,7 +33,8 @@ Suggests:
     knitr,
     rmarkdown,
     BiocStyle,
-    pkgdown
+    pkgdown,
+    gplots
 URL: https://github.com/lgatto/QFeaturesWorkshop2020
 BugReports: https://github.com/lgatto/QFeaturesWorkshop2020/issues/new/choose
 VignetteBuilder: knitr
