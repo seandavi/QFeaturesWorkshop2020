@@ -13,6 +13,7 @@ vignette: >
   %\VignetteEncoding[utf8]{inputenc}
   %\VignettePackage{QFeaturesWorkshop2020}
   %\VignetteDepends{QFeatures,tidyvers,limma,factoextra,patchwork,BiocStyle}
+bibliography: refs.bib
 ---
 
 ```{r style, echo = FALSE, results = 'asis', message = FALSE}
@@ -721,9 +722,11 @@ We can assess our results in terms of true/false postitves/negatives:
 
 # Final exercise
 
-As below shows, it is possible to substantially improve these results
+As shown below, it is possible to substantially improve these results
 by aggregating features using a robust summarisation (available as
-`MsCoreUtils::robustSummary()`).
+`MsCoreUtils::robustSummary()`), i.e robust regression with
+M-estimation using Huber weights, as described in section 2.7 in
+[@Sticker:2019].
 
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Aggregation using robust summarisation."}
