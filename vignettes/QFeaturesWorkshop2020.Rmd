@@ -727,38 +727,13 @@ by aggregating features using a robust summarisation (available as
 
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Aggregation using robust summarisation."}
-cptac <-
-    aggregateFeatures(cptac,
-                      "lognorm_peptides",
-                      name = "proteins_rob",
-                      fcol = "Leading.razor.protein",
-                      fun = MsCoreUtils::robustSummary,
-                      na.rm = TRUE)
-
-prots <- cptac[["proteins_rob"]]
-colData(prots) <- colData(cptac)
-
-design <- model.matrix(~ prots$condition)
-fit <- lmFit(assay(prots), design)
-fit <- eBayes(fit)
-
-res <- topTable(fit, coef = "prots$condition6B", number = Inf) %>%
-    rownames_to_column("protein") %>%
-    as_tibble() %>%
-    mutate(TP = grepl("ups", protein))
-
-res %>%
-    ggplot(aes(x = logFC, y = -log10(adj.P.Val))) +
-    geom_point(aes(colour = TP)) +
-    ggplot2::geom_vline(xintercept = c(-1, 1)) +
-    ggplot2::geom_hline(yintercept = -log10(0.05)) +
-    scale_color_manual(values = c("black","red"))
+knitr::include_graphics("./figs/vp2.svg")
 ```
 
-- True positives: `r nrow(filter(res, adj.P.Val < 0.05 & TP))`
-- False positives: `r nrow(filter(res, adj.P.Val < 0.05 & !TP))`
-- True negatives: `r nrow(filter(res, adj.P.Val > 0.05 & !TP))`
-- False negatives: `r nrow(filter(res, adj.P.Val > 0.05 & TP))`
+- True positives: 21
+- False positives: 1
+- True negatives: 1341
+- False negatives: 12
 
 Repeat and adapt what we have seen here using, for example, the
 `robustSummary()` function.
