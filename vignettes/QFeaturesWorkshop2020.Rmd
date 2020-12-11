@@ -2,8 +2,9 @@
 
 **Learning Objectives**
 
-The goals of this chapter are to provide a real-life example of
-step-by-step quantitative proteomics data analysis.
+The goals of this workshop are to provide a real-life example of
+step-by-step quantitative proteomics data analysis using the
+`QFeatures` package.
 
 ## Introduction
 
@@ -11,11 +12,8 @@ Mass spectrometry-based quantitative proteomics data can be
 representated as a matrix of quantitative values for features (PSMs,
 peptides, proteins) arranged along the rows, measured for a set of
 samples, arranged along the columns. The is a common representation
-for any quantitative data set. As already done in
-[this](https://uclouvain-cbio.github.io/WSBIM2122/sec-rnaseq.html#running-deseq2)
-and
-[previous](https://uclouvain-cbio.github.io/WSBIM1322/sec-obj.html#examples-from-the-bioconductor-project)
-course, we will be using the `SummarizedExperiment` class:
+for any quantitative data set. We will be using the
+`SummarizedExperiment` class:
 
 ```{r sefig, echo = FALSE, fig.cap = "Schematic representation of the anatomy if a `SummarizedExperiment` object. (Figure taken from the `SummarizedExperiment` package vignette.)"}
 knitr::include_graphics("./figs/SE.svg")
@@ -34,11 +32,10 @@ knitr::include_graphics("./figs/SE.svg")
 
 ## QFeatures
 
-As we have already discussed in the previous chapter, even though mass
-spectrometers acquire data for spectra/peptides, the biological entity
-of remains the protein. As part of the data processing, we are thus
-required to **aggregate** low-level quantitative features into higher
-level data.
+While mass spectrometers acquire data for spectra/peptides, the
+biological entity of interest are the protein. As part of the data
+processing, we are thus required to **aggregate** low-level
+quantitative features into higher level data.
 
 
 ```{r featuresplot, fig.cap = "Conceptual representation of a `QFeatures` object and the aggregative relation between different assays.", echo = FALSE}
@@ -104,7 +101,7 @@ segments(8, 15, 9, 12, lty = "dashed")
 We are going to start to familiarise ourselves with the `QFeatures`
 class implemented in the [`QFeatures`
 package](https://rformassspectrometry.github.io/QFeatures/articles/QFeatures.html). Let's
-start by loading the `tidyvers` and `QFeaures` packages.
+start by loading the `tidyvers` and `QFeatures` packages.
 
 ```{r sticker2, fig.cap = "The `QFeatures` package.", out.width = '50%', fig.margin=TRUE, echo=FALSE}
 knitr::include_graphics("figs/QFeatures.png")
@@ -125,40 +122,32 @@ data(feat1)
 feat1
 ```
 
-`r msmbstyle::question_begin()`
-
-Perform the following to familiarise yourselves with the `QFeatures` class:
+Let's perform some simple operations to familiarise ourselves with the
+`QFeatures` class:
 
 - Extract the sample metadata using the `colData()` accessor (like you
   have previously done with `SummarizedExperiment` objects).
 
-- Extract the first (and only) assay composing this `QFeaures` data
-  using the `[[` operator (as you have done to extract elements of a
-  list) by using the assay's index or name.
-
-- Extract the `psms` assay's row data and quantitative values.
-
-`r msmbstyle::question_end()`
-
-
-`r msmbstyle::solution_begin()`
-
 ```{r}
 colData(feat1)
 ```
+
+- Extract the first (and only) assay composing this `QFeaures` data
+  using the `[[` operator (as you have done to extract elements of a
+  list) by using the assay's index or name.
 
 ```{r}
 feat1[[1]]
 feat1[["psms"]]
 ```
 
+- Extract the `psms` assay's row data and quantitative values.
+
 ```{r}
 assay(feat1[[1]])
 rowData(feat1[[1]])
 
 ```
-`r msmbstyle::solution_end()`
-
 
 ## Feature aggregation
 
@@ -186,17 +175,9 @@ feat1 <- aggregateFeatures(feat1, i = "psms",
 feat1
 ```
 
-`r msmbstyle::question_begin()`
-
-- Convince yourself that you inderstand the effect of feature
-  aggregation.
-- Repeat the calculations manually.
-- Observe the content of the new assay's row data.
-
-`r msmbstyle::question_end()`
-
-
-`r msmbstyle::solution_begin()`
+- Let's convince yourself that we understand the effect of feature
+  aggregation and repeat the calculations manually and check the
+  content of the new assay's row data.
 
 ```{r}
 ## SYGFNAAR
@@ -216,17 +197,9 @@ assay(feat1[[2]])["IAEESNFPFIK", ]
 rowData(feat1[[2]])
 ```
 
-`r msmbstyle::solution_end()`
 
-`r msmbstyle::question_begin()`
-
-Aggregate the peptide-level data into a new protein-level assay using
-the `colMedians()` aggregation function.
-
-`r msmbstyle::question_end()`
-
-
-`r msmbstyle::solution_begin()`
+We can now aggregate the peptide-level data into a new protein-level
+assay using the `colMedians()` aggregation function.
 
 ```{r}
 feat1 <- aggregateFeatures(feat1, i = "peptides",
@@ -236,8 +209,6 @@ feat1 <- aggregateFeatures(feat1, i = "peptides",
 feat1
 assay(feat1[["proteins"]])
 ```
-
-`r msmbstyle::solution_end()`
 
 
 ## Subsetting and filtering
@@ -270,21 +241,16 @@ the mitochondrion, we retain the relevant protein, peptides and PSMs.
 filterFeatures(feat1, ~ location == "Mitochondrion")
 ```
 
-`r msmbstyle::question_begin()`
+As an exercise, let's filter rows that do not localise to the
+mitochondrion.
 
-Filter rows that do not localise to the mitochondrion.
-
-`r msmbstyle::question_end()`
-
-`r msmbstyle::solution_begin()`
 
 ```{r}
 filterFeatures(feat1, ~ location != "Mitochondrion")
 ```
 
-`r msmbstyle::solution_end()`
 
-You can refer the the [*Quantitative features for mass spectrometry
+You can refer to the [*Quantitative features for mass spectrometry
 data*](https://rformassspectrometry.github.io/QFeatures/articles/QFeatures.html)
 vignette and the `QFeature` [manual
 page](https://rformassspectrometry.github.io/QFeatures/reference/QFeatures-class.html)
@@ -426,18 +392,10 @@ o <- order(rowSums(.x))
         ylab = "Peptides")
 ```
 
-`r msmbstyle::question_begin()`
+Let's now explore these missing values:
 
 - Explore the number or proportion of missing values across peptides
   and samples of the `cptac_se` data.
-
-- Remove row that have *too many* missing values. You can do this by
-  hand or using the `filterNA()` function.
-
-`r msmbstyle::question_end()`
-
-
-`r msmbstyle::solution_begin()`
 
 ```{r}
 barplot(nNA(cptac_se)$nNAcols$pNA)
@@ -445,12 +403,13 @@ barplot(nNA(cptac_se)$nNAcols$pNA)
 table(nNA(cptac_se)$nNArows$nNA)
 ```
 
+- Remove row that have *too many* missing values. You can do this by
+  hand or using the `filterNA()` function.
+
 ```{r}
 ## remove rows that have 4 or more NAs out of 6
 cptac_se <- filterNA(cptac_se, pNA = 4/6)
 ```
-
-`r msmbstyle::solution_end()`
 
 
 ## Imputation
@@ -500,17 +459,11 @@ of contaminants:
 table(rowData(cptac_se)$Potential.contaminant)
 ```
 
-`r msmbstyle::question_begin()`
+Let's visualise some of the cptac's metadata using standard `ggplot2`
+code:
 
 - Visualise the score distributions from forward and reverse hits and
   interpret the figure.
-
-- Do the same with the posterior probability score (PEP).
-
-`r msmbstyle::question_end()`
-
-
-`r msmbstyle::solution_begin()`
 
 ```{r}
 rowData(cptac_se) %>%
@@ -520,14 +473,14 @@ rowData(cptac_se) %>%
 
 ```
 
+- Do the same with the posterior probability score (PEP).
+
 ```{r}
 rowData(cptac_se) %>%
     as_tibble() %>%
     ggplot(aes(x = PEP, colour = Reverse)) +
     geom_density()
 ```
-`r msmbstyle::solution_end()`
-
 
 
 ## Creating the QFeatures data
@@ -555,15 +508,9 @@ assays within a `QFeatures` object.
 
 ## Filtering out contaminants and reverse hits
 
-`r msmbstyle::question_begin()`
-
 Using the `filterFeatures()` function, filter out the reverse and
 contaminant hits.
 
-`r msmbstyle::question_end()`
-
-
-`r msmbstyle::solution_begin()`
 
 ```{r}
 cptac <-
@@ -571,8 +518,6 @@ cptac <-
     filterFeatures(~ Reverse != "+") %>%
     filterFeatures(~ Potential.contaminant != "+")
 ```
-
-`r msmbstyle::solution_end()`
 
 
 ## Log-transformation and normaliation
@@ -652,14 +597,6 @@ pca_prot <-
 pca_pep + pca_prot
 ```
 
-
-`r msmbstyle::question_begin()`
-
-Interpret the two PCA plots above.
-
-`r msmbstyle::question_end()`
-
-
 ## Visualisation
 
 
@@ -692,25 +629,16 @@ prots <- cptac[["proteins_med"]]
 colData(prots) <- colData(cptac)
 ```
 
-We have seen in chapter \@ref(sec:linmod) how to use linear models and
-have applied the same prinicples in chapter \@ref(sec:rnaseq) on count
-data (based on a negative binomial distribution).
-The `r BiocStyle::Biocpkg("limma")` package is the precursor package that
-enables the consistent application of linear models to normalliy
+The `r BiocStyle::Biocpkg("limma")` package is the precursor package
+that enables the consistent application of linear models to normalliy
 distributed omics data in general, and microarrays in
-particuar[^limma].
+particuar.
 
-[^limma]: The name of the package refers to *Linear Models for Microarray Data*.
-
-The `limma` package also implements an empirical Bayes method that
-provides borrows information across features to estimate the standard
-error[^shrinkage] and calculate (so called moderate) t
-statistics. This approach is demonstrably more powerful that a
-standard t-tests when the number of samples is lot.
-
-[^shrinkage]: alike the shinkage gene-wise dispersion estimates see in
-    `DESeq2`.
-
+The `limma` package implements an empirical Bayes method that provides
+borrows information across features to estimate the standard error and
+calculate (so called moderate) t statistics. This approach is
+demonstrably more powerful that a standard t-tests when the number of
+samples is lot.
 
 The code chunk below illstrated how to set up the model, fit it, and
 apply the empirical Bayes moderation.
@@ -733,14 +661,7 @@ res <-
     mutate(TP = grepl("ups", protein))
 ```
 
-`r msmbstyle::question_begin()`
-
-Note the warning about partial `NA` coefficients for 23 probes. Where
-could these come from?
-
-`r msmbstyle::question_end()`
-
-`r msmbstyle::solution_begin()`
+Note the warning about partial `NA` coefficients for 23 probes:
 
 ```{r}
 na_coefs <-
@@ -749,8 +670,7 @@ na_coefs <-
 assay(prots[na_coefs, ])
 ```
 
-`r msmbstyle::solution_end()`
-
+We can now visualise the results using a volcano plot:
 
 ```{r}
 vp <-
@@ -763,14 +683,9 @@ vp <-
 ```
 
 
-```{r, message = FALSE}
-library("plotly")
-ggplotly(vp)
-```
-
 Using the pipeline described above, we would would identify a single
 differentially expressed protein at an 5 percent FDR but miss out the
-other `r sum(res$TP) - 1` expected spike-in proteins. 
+other `r sum(res$TP) - 1` expected spike-in proteins.
 
 We can assess our results in terms of true/false postitves/negatives:
 
@@ -780,7 +695,12 @@ We can assess our results in terms of true/false postitves/negatives:
 - False negatives: `r nrow(filter(res, adj.P.Val > 0.05 & TP))`
 
 
-As below shows, it is possible to substantially improve these results.
+## Final exercise
+
+As below shows, it is possible to substantially improve these results
+by aggregating features using a robust summarisation (available as
+`MsCoreUtils::robustSummary()`).
+
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Aggregation using robust summarisation."}
 cptac <-
@@ -816,34 +736,5 @@ res %>%
 - True negatives: `r nrow(filter(res, adj.P.Val > 0.05 & !TP))`
 - False negatives: `r nrow(filter(res, adj.P.Val > 0.05 & TP))`
 
-## Project
-
-You are provided with the [larger CPTAC
-data](./data/cptac_a_b_c_peptides.txt) including a third condition
-(namely C) and a two additional lab, tallying now 27 samples.
-
-```{r, echo = FALSE}
-f <- "./data/cptac_a_b_c_peptides.txt"
-i <- grep("Intensity\\.", names(read.delim(f)))
-cptac2 <- readSummarizedExperiment(f, ecol = i,
-                                   sep = "\t",
-                                   fnames = "Sequence")
-colnames(cptac2) <- sub("I.+\\.", "", colnames(cptac2))
-cptac2$id <- sub("6.+_", "", colnames(cptac2))
-cptac2$condition <- sub("_[1-9]", "", colnames(cptac2))
-cptac2$lab <- rep(rep(c("LTQ-Orbitrap_86",
-                       "LTQ-OrbitrapO_65",
-                       "LTQ-OrbitrapW_56"), each = 3),
-                  3)
-
-write.csv(colData(cptac2), file = "./data/cptac_coldata.csv")
-knitr::kable(table(colData(cptac2)[, -1]))
-```
-The full design is shown below and is available [here](./data/cptac_coldata.csv).
-
-```{r, echo=FALSE}
-cd <- data.frame(colData(cptac2))
-cd$previous <- "new"
-cd[colnames(cptac_se), "previous"] <- ""
-knitr::kable(cd, rownames = TRUE)
-```
+Repeat and adapt what we have seen here using, for example, the
+`robustSummary()` function.

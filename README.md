@@ -17,3 +17,6 @@ QFeatures objects, how to process and analyse data in QFeatures
 objects, and how to interpret the results.  Some familiarity with
 Bioconductor data analysis, in particular the SummarizedExperiment
 class, is recommended to follow this short workshop.
+
+The content of this workshop is provided under a [CC-BY
+ShareAlike](https://creativecommons.org/licenses/by-sa/2.0/) license.
