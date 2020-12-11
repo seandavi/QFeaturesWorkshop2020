@@ -1,37 +1,38 @@
 Package: QFeaturesWorkshop2020
 Title: QFeatures EuroBioc2020 Workshop
 Version: 0.1.0
-Authors@R: 
+Authors@R:
     person(given = "Laurent",
-           family = "Gatto",
-           role = c("aut", "cre"),
-           email = "laurent.gatto@uclouvain.be",
-           comment = c(ORCID = "0000-0002-1520-2268"))
-Description: The QFeatures package provides infrastructure (that is 
-   classes to store data and the methods to process and manipulate 
-   them) to manage and analyse quantitative features from mass 
-   spectrometry experiments. It is based on the SummarizedExperiment 
-   and MultiAssayExperiment Bioconductor classes. Assays in a QFeatures 
-   object have a hierarchical relation: proteins are composed of 
-   peptides, themselves produced by spectra. Throughout the aggregation 
-   and processing of these data, the relations between assays are tracked 
-   and recorded, thus allowing users to easily navigate across spectra, 
-   peptide and protein quantitative data. In this workshop, we will 
-   demonstrate how to import data as QFeatures objects, how to process 
-   and analyse data in QFeatures objects, and how to interpret the results. 
-   Some familiarity with Bioconductor data analysis, in particular the 
-   SummarizedExperiment class, is recommended to follow this short workshop. 
+	   family = "Gatto",
+	   role = c("aut", "cre"),
+	   email = "laurent.gatto@uclouvain.be",
+	   comment = c(ORCID = "0000-0002-1520-2268"))
+Description: The QFeatures package provides infrastructure (that is
+   classes to store data and the methods to process and manipulate
+   them) to manage and analyse quantitative features from mass
+   spectrometry experiments. It is based on the SummarizedExperiment
+   and MultiAssayExperiment Bioconductor classes. Assays in a QFeatures
+   object have a hierarchical relation: proteins are composed of
+   peptides, themselves produced by spectra. Throughout the aggregation
+   and processing of these data, the relations between assays are tracked
+   and recorded, thus allowing users to easily navigate across spectra,
+   peptide and protein quantitative data. In this workshop, we will
+   demonstrate how to import data as QFeatures objects, how to process
+   and analyse data in QFeatures objects, and how to interpret the results.
+   Some familiarity with Bioconductor data analysis, in particular the
+   SummarizedExperiment class, is recommended to follow this short workshop.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
-Depends: 
-    SummarizedExperiment, MultiAssayExperiment, QFeatures, msdata, 
+Depends:
+    SummarizedExperiment, MultiAssayExperiment, QFeatures, msdata,
     factoextra, tidyverse, patchwork, limma
-Suggests: 
+Suggests:
     knitr,
     rmarkdown,
+    BiocStyle,
     pkgdown
 URL: https://github.com/lgatto/QFeaturesWorkshop2020
 BugReports: https://github.com/lgatto/QFeaturesWorkshop2020/issues/new/choose
