@@ -33,6 +33,7 @@ Suggests:
     knitr,
     rmarkdown,
     MsCoreUtils,
+    preprocessCore,
     BiocStyle,
     pkgdown,
     gplots
