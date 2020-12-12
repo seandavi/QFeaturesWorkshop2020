@@ -26,17 +26,20 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
-Depends:
-    SummarizedExperiment, MultiAssayExperiment, QFeatures, msdata,
-    factoextra, tidyverse, patchwork, limma
+Depends: SummarizedExperiment, MultiAssayExperiment, QFeatures
 Suggests:
     knitr,
+    msdata,
+    limma,
+    tidyverse,
+    factoextra,
+    patchwork,
     rmarkdown,
     MsCoreUtils,
     BiocStyle,
     pkgdown,
     gplots
 URL: https://github.com/lgatto/QFeaturesWorkshop2020
-BugReports: https://github.com/lgatto/QFeaturesWorkshop2020/issues/new/choose
+BugReports: https://github.com/lgatto/QFeaturesWorkshop2020/issues/
 VignetteBuilder: knitr
 DockerImage: lgatto/qfeaturesworkshop2020:latest
