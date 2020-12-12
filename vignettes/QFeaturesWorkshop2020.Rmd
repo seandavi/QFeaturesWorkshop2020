@@ -124,7 +124,7 @@ packages.
 knitr::include_graphics("QFeatures.png")
 ```
 
-```{r, message = FALSE}
+```{r pkgs, message = FALSE}
 library("tidyverse")
 library("ggplot2")
 library("QFeatures")
@@ -135,7 +135,7 @@ Next, we load the `feat1` test data, which is composed of single
 *assay* of class `SummarizedExperiment` composed of 10 rows and 2
 columns.
 
-```{r}
+```{r load_feat1}
 data(feat1)
 feat1
 ```
@@ -146,7 +146,7 @@ Let's perform some simple operations to familiarise ourselves with the
 - Extract the sample metadata using the `colData()` accessor (like you
   have previously done with `SummarizedExperiment` objects).
 
-```{r}
+```{r cd}
 colData(feat1)
 ```
 
@@ -154,14 +154,14 @@ colData(feat1)
   using the `[[` operator (as you have done to extract elements of a
   list) by using the assay's index or name.
 
-```{r}
+```{r assay1}
 feat1[[1]]
 feat1[["psms"]]
 ```
 
 - Extract the `psms` assay's row data and quantitative values.
 
-```{r}
+```{r rd}
 assay(feat1[[1]])
 rowData(feat1[[1]])
 ```
@@ -183,7 +183,7 @@ The call below will
 - create a new assay named `peptides` and add it to the `feat1`
   object.
 
-```{r}
+```{r agg1}
 feat1 <- aggregateFeatures(feat1, i = "psms",
                            fcol = "Sequence",
                            name = "peptides",
@@ -195,7 +195,7 @@ feat1
   aggregation and repeat the calculations manually and check the
   content of the new assay's row data.
 
-```{r}
+```{r cm}
 ## SYGFNAAR
 colMeans(assay(feat1[[1]])[1:3, ])
 assay(feat1[[2]])["SYGFNAAR", ]
@@ -209,7 +209,7 @@ colMeans(assay(feat1[[1]])[7:10, ])
 assay(feat1[[2]])["IAEESNFPFIK", ]
 ```
 
-```{r}
+```{r rd2}
 rowData(feat1[[2]])
 ```
 
@@ -217,7 +217,7 @@ rowData(feat1[[2]])
 We can now aggregate the peptide-level data into a new protein-level
 assay using the `colMedians()` aggregation function.
 
-```{r}
+```{r agg2}
 feat1 <- aggregateFeatures(feat1, i = "peptides",
                            fcol = "Protein",
                            name = "proteins",
@@ -235,7 +235,7 @@ function. This creates a new instance of class `QFeatures` containing
 assays with the expression data for protein, its peptides and their
 PSMs.
 
-```{r}
+```{r prota}
 feat1["ProtA", , ]
 ```
 
@@ -246,14 +246,14 @@ for example retain rows that have a `pval` < 0.05, which would only
 keep rows in the `psms` assay because the `pval` is only relevant for
 that assay.
 
-```{r}
+```{r ff1}
 filterFeatures(feat1, ~ pval < 0.05)
 ```
 
 On the other hand, if we filter assay rows for those that localise to
 the mitochondrion, we retain the relevant protein, peptides and PSMs.
 
-```{r}
+```{r ff2}
 filterFeatures(feat1, ~ location == "Mitochondrion")
 ```
 
@@ -261,7 +261,7 @@ As an exercise, let's filter rows that do not localise to the
 mitochondrion.
 
 
-```{r}
+```{r ff3}
 filterFeatures(feat1, ~ location != "Mitochondrion")
 ```
 
@@ -323,7 +323,7 @@ as an instance of class `SummarizedExperiment`. We also use the
 `fnames` argument to set the row-names of the `peptides` assay to the
 peptide sequences and specify that the file is a tab-separated table.
 
-```{r}
+```{r readse}
 cptac_se <- readSummarizedExperiment(f, ecol = i, fnames = "Sequence", sep = "\t")
 cptac_se
 ```
@@ -331,7 +331,7 @@ cptac_se
 Before proceeding, we are going to clean up the sample names and
 annotate the experiment:
 
-```{r}
+```{r cptac_names}
 colnames(cptac_se) <- sub("I.+\\.", "", colnames(cptac_se))
 cptac_se$condition <- sub("_[7-9]", "", colnames(cptac_se))
 cptac_se$id <- sub("^.+_", "", colnames(cptac_se))
@@ -340,7 +340,7 @@ colData(cptac_se)
 
 Let's also keep only a subset of
 
-```{r}
+```{r vars}
 keep_var <- c("Sequence", "Proteins", "Leading.razor.protein", "PEP",
               "Score", "Reverse", "Potential.contaminant")
 
@@ -375,12 +375,12 @@ instead of properly reporting missing values. We can use the
 columns and rows.
 
 
-```{r}
+```{r na}
 cptac_se <- zeroIsNA(cptac_se)
 nNA(cptac_se)
 ```
 
-```{r, echo = FALSE, fig.cap = "Distribution of missing value (white). Peptides row with more missing values are moved towards the top of the figure."}
+```{r imagena, echo = FALSE, fig.cap = "Distribution of missing value (white). Peptides row with more missing values are moved towards the top of the figure."}
 .image2 <- function (x, yticks = 10,
                      x.cex.axis = 0.75,
                      y.cex.axis = 0.75,
@@ -413,7 +413,7 @@ Let's now explore these missing values:
 - Explore the number or proportion of missing values across peptides
   and samples of the `cptac_se` data.
 
-```{r}
+```{r na2}
 barplot(nNA(cptac_se)$nNAcols$pNA)
 
 table(nNA(cptac_se)$nNArows$nNA)
@@ -422,7 +422,7 @@ table(nNA(cptac_se)$nNArows$nNA)
 - Remove row that have *too many* missing values. You can do this by
   hand or using the `filterNA()` function.
 
-```{r}
+```{r filterna}
 ## remove rows that have 4 or more NAs out of 6
 cptac_se <- filterNA(cptac_se, pNA = 4/6)
 ```
@@ -464,14 +464,14 @@ As discussed in the previous chapter, PSMs are deemed relevant after
 comparison against hist from a decoy database. The origin of these
 hits is recorded with `+` in the `Reverse` variable:
 
-```{r}
+```{r rev}
 table(rowData(cptac_se)$Reverse)
 ```
 
 Similarly, a proteomics experiment is also searched against a database
 of contaminants:
 
-```{r}
+```{r cont}
 table(rowData(cptac_se)$Potential.contaminant)
 ```
 
@@ -481,7 +481,7 @@ code:
 - Visualise the score distributions from forward and reverse hits and
   interpret the figure.
 
-```{r}
+```{r idqc1}
 rowData(cptac_se) %>%
     as_tibble() %>%
     ggplot(aes(x = Score, colour = Reverse)) +
@@ -491,7 +491,7 @@ rowData(cptac_se) %>%
 
 - Do the same with the posterior probability score (PEP).
 
-```{r}
+```{r idqc2}
 rowData(cptac_se) %>%
     as_tibble() %>%
     ggplot(aes(x = PEP, colour = Reverse)) +
@@ -504,7 +504,7 @@ rowData(cptac_se) %>%
 We can now create our `QFeatures` object using the
 `SummarizedExperiment` as show below.
 
-```{r}
+```{r qf}
 cptac <- QFeatures(list(peptides = cptac_se))
 cptac
 ```
@@ -512,7 +512,7 @@ cptac
 We should also assign the `QFeatures` column data with the
 `SummarizedExperiment` slot.
 
-```{r}
+```{r qfcd}
 colData(cptac) <- colData(cptac_se)
 ```
 
@@ -529,7 +529,7 @@ Using the `filterFeatures()` function, filter out the reverse and
 contaminant hits.
 
 
-```{r}
+```{r qcfilter}
 cptac <-
     cptac %>%
     filterFeatures(~ Reverse != "+") %>%
@@ -543,18 +543,18 @@ cptac <-
 The two code chunks below log-transform and normalise using the assay
 `i` as input and adding a new one names as defined by `name`.
 
-```{r}
+```{r log}
 cptac <- logTransform(cptac, i = "peptides",
                       name = "log_peptides")
 ```
 
-```{r}
+```{r nrom}
 cptac <- normalize(cptac, i = "log_peptides",
                    name = "lognorm_peptides",
                    method = "center.median")
 ```
 
-```{r, fig.cap = "Three peptide level assays: raw data, log transformed and normalised.", fig.width = 15, fig.height = 5, fig.fullwidth = TRUE}
+```{r plotdens, fig.cap = "Three peptide level assays: raw data, log transformed and normalised.", fig.width = 15, fig.height = 5}
 par(mfrow = c(1, 3))
 limma::plotDensities(assay(cptac[["peptides"]]))
 limma::plotDensities(assay(cptac[["log_peptides"]]))
@@ -567,7 +567,7 @@ Below, we are going to use median aggregation, as a first
 attempt. This is however not the best choice, as we will see later.
 
 
-```{r, message = FALSE}
+```{r qfagg1, message = FALSE}
 cptac <-
     aggregateFeatures(cptac,
                       "lognorm_peptides",
@@ -588,7 +588,7 @@ table(rowData(cptac[["proteins_med"]])$.n)
 ### Principal component analysis
 
 
-```{r, message = FALSE}
+```{r pca, message = FALSE}
 library("factoextra")
 library("patchwork")
 
@@ -611,7 +611,7 @@ pca_prot <-
 
 ```
 
-```{r, fig.fullwidth = TRUE, fig.width = 12, fig.height = 6, fig.cap = "Peptide and protein level PCA analyses."}
+```{r plotpca, fig.width = 12, fig.height = 6, fig.cap = "Peptide and protein level PCA analyses."}
 pca_pep + pca_prot
 ```
 
@@ -623,7 +623,7 @@ and row data in a long format, that can be directly reused by the
 tidyverse tools.
 
 
-```{r, message = FALSE, warning = FALSE, fig.width = 12, fig.height = 6, fig.cap = "Peptide and protein expression profile.", fig.fullwidth = TRUE}
+```{r vis, message = FALSE, warning = FALSE, fig.width = 12, fig.height = 6, fig.cap = "Peptide and protein expression profile."}
 longFormat(cptac["P02787ups|TRFE_HUMAN_UPS", ,
                  c("lognorm_peptides", "proteins_med")]) %>%
     as_tibble() %>%
@@ -642,7 +642,7 @@ Below, we are going to perform our statistical analysis on the protein
 data.
 
 
-```{r}
+```{r protse}
 prots <- cptac[["proteins_med"]]
 colData(prots) <- colData(cptac)
 ```
@@ -661,7 +661,7 @@ samples is lot.
 The code chunk below illstrated how to set up the model, fit it, and
 apply the empirical Bayes moderation.
 
-```{r, message = FALSE}
+```{r limma, message = FALSE}
 library("limma")
 design <- model.matrix(~ prots$condition)
 fit <- lmFit(assay(prots), design)
@@ -671,7 +671,7 @@ fit <- eBayes(fit)
 Finally, the `topTable()` function is used the extract the results for
 the coefficient of interest.
 
-```{r}
+```{r res}
 res <-
     topTable(fit, coef = "prots$condition6B", number = Inf) %>%
     rownames_to_column("protein") %>%
@@ -681,7 +681,7 @@ res <-
 
 Note the warning about partial `NA` coefficients for 23 probes:
 
-```{r}
+```{r nacoefs}
 na_coefs <-
     filter(res, is.na(t)) %>%
     pull(protein)
@@ -690,28 +690,26 @@ assay(prots[na_coefs, ])
 
 We can now visualise the results using a volcano plot:
 
-```{r}
-vp <-
-    res %>%
+```{r vp, fig.cap = "Volcano plot highlighing spiked-in proteins in red."}
+res %>%
     ggplot(aes(x = logFC, y = -log10(adj.P.Val))) +
     geom_point(aes(colour = TP)) +
     geom_vline(xintercept = c(-1, 1)) +
     geom_hline(yintercept = -log10(0.05)) +
     scale_color_manual(values = c("black","red"))
-vp
 ```
 
 
-<!-- Using the pipeline described above, we would would identify a single -->
-<!-- differentially expressed protein at an 5 percent FDR but miss out the -->
-<!-- other `r sum(res$TP) - 1` expected spike-in proteins. -->
+Using the pipeline described above, we would would identify a single
+differentially expressed protein at an 5 percent FDR but miss out the
+other `r sum(res$TP) - 1` expected spike-in proteins.
 
-<!-- We can assess our results in terms of true/false postitves/negatives: -->
+We can assess our results in terms of true/false postitves/negatives:
 
-<!-- - True positives: `r nrow(filter(res, adj.P.Val < 0.05 & TP))` -->
-<!-- - False positives: `r nrow(filter(res, adj.P.Val < 0.05 & !TP))` -->
-<!-- - True negatives: `r nrow(filter(res, adj.P.Val > 0.05 & !TP))` -->
-<!-- - False negatives: `r nrow(filter(res, adj.P.Val > 0.05 & TP))` -->
+- True positives: `r nrow(filter(res, adj.P.Val < 0.05 & TP))`
+- False positives: `r nrow(filter(res, adj.P.Val < 0.05 & !TP))`
+- True negatives: `r nrow(filter(res, adj.P.Val > 0.05 & !TP))`
+- False negatives: `r nrow(filter(res, adj.P.Val > 0.05 & TP))`
 
 
 ## Final exercise
@@ -753,10 +751,10 @@ res %>%
     scale_color_manual(values = c("black","red"))
 ```
 
-<!-- - True positives: `r nrow(filter(res, adj.P.Val < 0.05 & TP))` -->
-<!-- - False positives: `r nrow(filter(res, adj.P.Val < 0.05 & !TP))` -->
-<!-- - True negatives: `r nrow(filter(res, adj.P.Val > 0.05 & !TP))` -->
-<!-- - False negatives: `r nrow(filter(res, adj.P.Val > 0.05 & TP))` -->
+- True positives: `r nrow(filter(res, adj.P.Val < 0.05 & TP))`
+- False positives: `r nrow(filter(res, adj.P.Val < 0.05 & !TP))`
+- True negatives: `r nrow(filter(res, adj.P.Val > 0.05 & !TP))`
+- False negatives: `r nrow(filter(res, adj.P.Val > 0.05 & TP))`
 
 Repeat and adapt what we have seen here using, for example, the
 `robustSummary()` function.
