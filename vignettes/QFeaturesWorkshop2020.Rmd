@@ -11,7 +11,7 @@ bibliography: refs.bib
 
 ```{r style, echo = FALSE, results = 'asis', message = FALSE}
 library(BiocStyle)
-knitr::opts_chunk$set(echo = TRUE, message = FALSE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, eval = FALSE)
 ```
 
 **Last modified:** `r file.info("QFeaturesWorkshop2020.Rmd")$mtime`<br />
@@ -183,7 +183,7 @@ The call below will
 - create a new assay named `peptides` and add it to the `feat1`
   object.
 
-```{r, eval = FALSE}
+```{r}
 feat1 <- aggregateFeatures(feat1, i = "psms",
                            fcol = "Sequence",
                            name = "peptides",
@@ -195,7 +195,7 @@ feat1
   aggregation and repeat the calculations manually and check the
   content of the new assay's row data.
 
-```{r, eval = FALSE}
+```{r}
 ## SYGFNAAR
 colMeans(assay(feat1[[1]])[1:3, ])
 assay(feat1[[2]])["SYGFNAAR", ]
@@ -209,7 +209,7 @@ colMeans(assay(feat1[[1]])[7:10, ])
 assay(feat1[[2]])["IAEESNFPFIK", ]
 ```
 
-```{r, eval = FALSE}
+```{r}
 rowData(feat1[[2]])
 ```
 
@@ -217,7 +217,7 @@ rowData(feat1[[2]])
 We can now aggregate the peptide-level data into a new protein-level
 assay using the `colMedians()` aggregation function.
 
-```{r, eval = FALSE}
+```{r}
 feat1 <- aggregateFeatures(feat1, i = "peptides",
                            fcol = "Protein",
                            name = "proteins",
@@ -235,7 +235,7 @@ function. This creates a new instance of class `QFeatures` containing
 assays with the expression data for protein, its peptides and their
 PSMs.
 
-```{r, eval = FALSE}
+```{r}
 feat1["ProtA", , ]
 ```
 
@@ -246,14 +246,14 @@ for example retain rows that have a `pval` < 0.05, which would only
 keep rows in the `psms` assay because the `pval` is only relevant for
 that assay.
 
-```{r, eval = FALSE}
+```{r}
 filterFeatures(feat1, ~ pval < 0.05)
 ```
 
 On the other hand, if we filter assay rows for those that localise to
 the mitochondrion, we retain the relevant protein, peptides and PSMs.
 
-```{r, eval = FALSE}
+```{r}
 filterFeatures(feat1, ~ location == "Mitochondrion")
 ```
 
@@ -261,7 +261,7 @@ As an exercise, let's filter rows that do not localise to the
 mitochondrion.
 
 
-```{r, eval = FALSE}
+```{r}
 filterFeatures(feat1, ~ location != "Mitochondrion")
 ```
 
@@ -702,16 +702,16 @@ vp
 ```
 
 
-Using the pipeline described above, we would would identify a single
-differentially expressed protein at an 5 percent FDR but miss out the
-other `r sum(res$TP) - 1` expected spike-in proteins.
+<!-- Using the pipeline described above, we would would identify a single -->
+<!-- differentially expressed protein at an 5 percent FDR but miss out the -->
+<!-- other `r sum(res$TP) - 1` expected spike-in proteins. -->
 
-We can assess our results in terms of true/false postitves/negatives:
+<!-- We can assess our results in terms of true/false postitves/negatives: -->
 
-- True positives: `r nrow(filter(res, adj.P.Val < 0.05 & TP))`
-- False positives: `r nrow(filter(res, adj.P.Val < 0.05 & !TP))`
-- True negatives: `r nrow(filter(res, adj.P.Val > 0.05 & !TP))`
-- False negatives: `r nrow(filter(res, adj.P.Val > 0.05 & TP))`
+<!-- - True positives: `r nrow(filter(res, adj.P.Val < 0.05 & TP))` -->
+<!-- - False positives: `r nrow(filter(res, adj.P.Val < 0.05 & !TP))` -->
+<!-- - True negatives: `r nrow(filter(res, adj.P.Val > 0.05 & !TP))` -->
+<!-- - False negatives: `r nrow(filter(res, adj.P.Val > 0.05 & TP))` -->
 
 
 # Final exercise
@@ -753,10 +753,10 @@ res %>%
     scale_color_manual(values = c("black","red"))
 ```
 
-- True positives: `r nrow(filter(res, adj.P.Val < 0.05 & TP))`
-- False positives: `r nrow(filter(res, adj.P.Val < 0.05 & !TP))`
-- True negatives: `r nrow(filter(res, adj.P.Val > 0.05 & !TP))`
-- False negatives: `r nrow(filter(res, adj.P.Val > 0.05 & TP))`
+<!-- - True positives: `r nrow(filter(res, adj.P.Val < 0.05 & TP))` -->
+<!-- - False positives: `r nrow(filter(res, adj.P.Val < 0.05 & !TP))` -->
+<!-- - True negatives: `r nrow(filter(res, adj.P.Val > 0.05 & !TP))` -->
+<!-- - False negatives: `r nrow(filter(res, adj.P.Val > 0.05 & TP))` -->
 
 Repeat and adapt what we have seen here using, for example, the
 `robustSummary()` function.
