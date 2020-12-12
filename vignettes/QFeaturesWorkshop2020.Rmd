@@ -1,6 +1,11 @@
 ---
 title: "Quantitative proteomics data analysis with `QFeatures`"
 author: "Laurent Gatto and Christophe Vanderaa"
+output:
+  rmarkdown::html_document:
+    highlight: pygments
+    toc: true
+    toc_depth: 3
 vignette: >
   %\VignetteIndexEntry{Quantitative proteomics data analysis}
   %\VignetteEngine{knitr::rmarkdown}
