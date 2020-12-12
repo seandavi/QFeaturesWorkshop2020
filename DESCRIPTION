@@ -28,6 +28,8 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
 Depends: SummarizedExperiment, MultiAssayExperiment, QFeatures
 Suggests:
+    BiocStyle,
+    pkgdown,
     knitr,
     msdata,
     preprocessCore,
@@ -38,8 +40,6 @@ Suggests:
     patchwork,
     rmarkdown,
     MsCoreUtils,
-    BiocStyle,
-    pkgdown,
     gplots
 URL: https://github.com/lgatto/QFeaturesWorkshop2020
 BugReports: https://github.com/lgatto/QFeaturesWorkshop2020/issues/
