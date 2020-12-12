@@ -11,7 +11,6 @@ vignette: >
   %\VignetteIndexEntry{Quantitative proteomics data analysis}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding[utf8]{inputenc}
-  %\VignettePackage{QFeaturesWorkshop2020}
 bibliography: refs.bib
 ---
 
@@ -190,17 +189,11 @@ The call below will
 - create a new assay named `peptides` and add it to the `feat1`
   object.
 
-```{r}
+```{r, eval = FALSE}
 feat1 <- aggregateFeatures(feat1, i = "psms",
                            fcol = "Sequence",
                            name = "peptides",
                            fun = colMeans)
-```
-
-The `feat1` object now contains a second assay with peptide-level
-quantitation data:
-
-```{r}
 feat1
 ```
 
@@ -222,7 +215,7 @@ colMeans(assay(feat1[[1]])[7:10, ])
 assay(feat1[[2]])["IAEESNFPFIK", ]
 ```
 
-```{r}
+```{r, eval = FALSE}
 rowData(feat1[[2]])
 ```
 
@@ -230,7 +223,7 @@ rowData(feat1[[2]])
 We can now aggregate the peptide-level data into a new protein-level
 assay using the `colMedians()` aggregation function.
 
-```{r}
+```{r, eval = FALSE}
 feat1 <- aggregateFeatures(feat1, i = "peptides",
                            fcol = "Protein",
                            name = "proteins",
@@ -248,7 +241,7 @@ function. This creates a new instance of class `QFeatures` containing
 assays with the expression data for protein, its peptides and their
 PSMs.
 
-```{r}
+```{r, eval = FALSE}
 feat1["ProtA", , ]
 ```
 
@@ -259,14 +252,14 @@ for example retain rows that have a `pval` < 0.05, which would only
 keep rows in the `psms` assay because the `pval` is only relevant for
 that assay.
 
-```{r}
+```{r, eval = FALSE}
 filterFeatures(feat1, ~ pval < 0.05)
 ```
 
 On the other hand, if we filter assay rows for those that localise to
 the mitochondrion, we retain the relevant protein, peptides and PSMs.
 
-```{r}
+```{r, eval = FALSE}
 filterFeatures(feat1, ~ location == "Mitochondrion")
 ```
 
@@ -274,7 +267,7 @@ As an exercise, let's filter rows that do not localise to the
 mitochondrion.
 
 
-```{r}
+```{r, eval = FALSE}
 filterFeatures(feat1, ~ location != "Mitochondrion")
 ```
 
