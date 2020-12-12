@@ -30,6 +30,7 @@ Depends: SummarizedExperiment, MultiAssayExperiment, QFeatures
 Suggests:
     knitr,
     msdata,
+    preprocessCore,
     limma,
     ggplot2,
     tidyverse,
