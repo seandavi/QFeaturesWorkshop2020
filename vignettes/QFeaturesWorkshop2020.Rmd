@@ -171,7 +171,6 @@ feat1[["psms"]]
 ```{r}
 assay(feat1[[1]])
 rowData(feat1[[1]])
-
 ```
 
 # Feature aggregation
@@ -515,6 +514,7 @@ We can now create our `QFeatures` object using the
 
 ```{r}
 cptac <- QFeatures(list(peptides = cptac_se))
+cptac
 ```
 
 We should also assign the `QFeatures` column data with the
@@ -558,7 +558,8 @@ cptac <- logTransform(cptac, i = "peptides",
 
 ```{r}
 cptac <- normalize(cptac, i = "log_peptides",
-                   name = "lognorm_peptides", method = "quantiles")
+                   name = "lognorm_peptides",
+                   method = "center.median")
 ```
 
 ```{r, fig.cap = "Three peptide level assays: raw data, log transformed and normalised.", fig.width = 15, fig.height = 5, fig.fullwidth = TRUE}
@@ -705,6 +706,7 @@ vp <-
     ggplot2::geom_vline(xintercept = c(-1, 1)) +
     ggplot2::geom_hline(yintercept = -log10(0.05)) +
     scale_color_manual(values = c("black","red"))
+vp
 ```
 
 
