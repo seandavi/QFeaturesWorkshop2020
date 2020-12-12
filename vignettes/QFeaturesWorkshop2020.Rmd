@@ -124,8 +124,7 @@ segments(8, 15, 9, 12, lty = "dashed")
 ```
 
 We are going to start to familiarise ourselves with the `QFeatures`
-class implemented in the [`QFeatures`
-package](https://rformassspectrometry.github.io/QFeatures/articles/QFeatures.html). Let's
+class implemented in the [`QFeatures` package](https://rformassspectrometry.github.io/QFeatures/articles/QFeatures.html). Let's
 start by loading the `tidyverse` and `QFeatures` packages.
 
 ```{r sticker2, fig.cap = "The `QFeatures` package.", out.width = '50%', fig.margin=TRUE, echo=FALSE}
@@ -180,8 +179,7 @@ rowData(feat1[[1]])
 The central functionality of the `QFeatures` infrastructure is the
 aggregation of features into higher-level features while retaining the
 link between the different levels. This can be done with the
-[`aggregateFeatures()`
-function](https://rformassspectrometry.github.io/QFeatures/reference/QFeatures-aggregate.html).
+[`aggregateFeatures()` function](https://rformassspectrometry.github.io/QFeatures/reference/QFeatures-aggregate.html).
 
 The call below will
 
@@ -197,6 +195,12 @@ feat1 <- aggregateFeatures(feat1, i = "psms",
                            fcol = "Sequence",
                            name = "peptides",
                            fun = colMeans)
+```
+
+The `feat1` object now contains a second assay with peptide-level
+quantitation data:
+
+```{r}
 feat1
 ```
 
