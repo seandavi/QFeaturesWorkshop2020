@@ -3,10 +3,9 @@ url: https://lgatto.github.io/QFeaturesWorkshop2020
 template:
   params:
     bootswatch: flatly
-    ganalytics: UA-93043521-1
 
 home:
-  title: "QFeaturesWorkshop2020"
+  title: "QFeatures EuroBioc2020 Workshop"
   type: inverse
 
 

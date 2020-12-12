@@ -6,3 +6,4 @@ Dockerfile
 _pkgdown.yml
 ^.*\.Rproj$
 ^\.Rproj\.user$
+.editorconfig

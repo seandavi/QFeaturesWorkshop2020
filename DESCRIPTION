@@ -21,7 +21,7 @@ Description: The QFeatures package provides infrastructure (that is
    and analyse data in QFeatures objects, and how to interpret the results.
    Some familiarity with Bioconductor data analysis, in particular the
    SummarizedExperiment class, is recommended to follow this short workshop.
-License: MIT + file LICENSE
+License: Artistic-2.0
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -29,8 +29,9 @@ RoxygenNote: 7.1.0
 Depends: SummarizedExperiment, MultiAssayExperiment, QFeatures
 Suggests:
     BiocStyle,
-    pkgdown,
     knitr,
+    rmarkdown,
+    pkgdown,
     msdata,
     preprocessCore,
     limma,
@@ -38,7 +39,6 @@ Suggests:
     tidyverse,
     factoextra,
     patchwork,
-    rmarkdown,
     MsCoreUtils,
     gplots
 URL: https://github.com/lgatto/QFeaturesWorkshop2020
