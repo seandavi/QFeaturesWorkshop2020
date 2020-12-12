@@ -31,6 +31,7 @@ Suggests:
     knitr,
     msdata,
     limma,
+    ggplot2,
     tidyverse,
     factoextra,
     patchwork,

@@ -126,7 +126,7 @@ segments(8, 15, 9, 12, lty = "dashed")
 We are going to start to familiarise ourselves with the `QFeatures`
 class implemented in the [`QFeatures`
 package](https://rformassspectrometry.github.io/QFeatures/articles/QFeatures.html). Let's
-start by loading the `tidyvers` and `QFeatures` packages.
+start by loading the `tidyverse` and `QFeatures` packages.
 
 ```{r sticker2, fig.cap = "The `QFeatures` package.", out.width = '50%', fig.margin=TRUE, echo=FALSE}
 knitr::include_graphics("figs/QFeatures.png")
@@ -134,6 +134,7 @@ knitr::include_graphics("figs/QFeatures.png")
 
 ```{r, message = FALSE}
 library("tidyverse")
+library("ggplot2")
 library("QFeatures")
 library("limma")
 ```
@@ -703,8 +704,8 @@ vp <-
     res %>%
     ggplot(aes(x = logFC, y = -log10(adj.P.Val))) +
     geom_point(aes(colour = TP)) +
-    ggplot2::geom_vline(xintercept = c(-1, 1)) +
-    ggplot2::geom_hline(yintercept = -log10(0.05)) +
+    geom_vline(xintercept = c(-1, 1)) +
+    geom_hline(yintercept = -log10(0.05)) +
     scale_color_manual(values = c("black","red"))
 vp
 ```
@@ -756,8 +757,8 @@ res <- topTable(fit, coef = "prots$condition6B", number = Inf) %>%
 res %>%
     ggplot(aes(x = logFC, y = -log10(adj.P.Val))) +
     geom_point(aes(colour = TP)) +
-    ggplot2::geom_vline(xintercept = c(-1, 1)) +
-    ggplot2::geom_hline(yintercept = -log10(0.05)) +
+    geom_vline(xintercept = c(-1, 1)) +
+    geom_hline(yintercept = -log10(0.05)) +
     scale_color_manual(values = c("black","red"))
 ```
 
