@@ -1,4 +1,4 @@
-------
+---
 title: "Quantitative proteomics data analysis with `QFeatures`"
 author: "Laurent Gatto^[Computational Biology Unit, de Duve Institute, UCLouvain, Brussels, Belgium], Christophe Vanderaa^[Computational Biology Unit, de Duve Institute, UCLouvain, Brussels, Belgium]"
 output:
@@ -14,6 +14,7 @@ vignette: >
   %\VignettePackage{QFeaturesWorkshop2020}
 bibliography: refs.bib
 ---
+
 
 ```{r style, echo = FALSE, results = 'asis', message = FALSE}
 library(BiocStyle)
