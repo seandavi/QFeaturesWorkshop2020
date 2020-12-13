@@ -14,6 +14,7 @@ bibliography: refs.bib
 ---
 
 
+
 **Last modified:** `r file.info("QFeaturesWorkshop2020.Rmd")$mtime`<br />
 **Compiled**: `r date()`
 
@@ -31,7 +32,7 @@ samples, arranged along the columns. The is a common representation
 for any quantitative data set. We will be using the
 `SummarizedExperiment` class:
 
-```{r sefig, echo = FALSE, fig.cap = "Schematic representation of the anatomy if a `SummarizedExperiment` object. (Figure taken from the `SummarizedExperiment` package vignette.)"}
+```{r sefig, echo = FALSE}
 knitr::include_graphics("SE.svg")
 ```
 
@@ -54,7 +55,7 @@ processing, we are thus required to **aggregate** low-level
 quantitative features into higher level data.
 
 
-```{r featuresplot, fig.cap = "Conceptual representation of a `QFeatures` object and the aggregative relation between different assays.", echo = FALSE}
+```{r featuresplot, echo = FALSE}
 par(mar = c(0, 0, 0, 0))
 plot(NA, xlim = c(0, 12), ylim = c(0, 20),
      xaxt = "n", yaxt = "n",
