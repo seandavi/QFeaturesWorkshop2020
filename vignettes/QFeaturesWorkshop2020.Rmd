@@ -14,11 +14,6 @@ bibliography: refs.bib
 ---
 
 
-```{r style, echo = FALSE, results = 'asis', message = FALSE}
-library(BiocStyle)
-knitr::opts_chunk$set(echo = TRUE, message = FALSE)
-```
-
 **Last modified:** `r file.info("QFeaturesWorkshop2020.Rmd")$mtime`<br />
 **Compiled**: `r date()`
 

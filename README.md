@@ -1,5 +1,9 @@
 # QFeatures EuroBioc2020 Workshop
 
+<img
+src="https://raw.githubusercontent.com/rformassspectrometry/stickers/master/QFeatures/QFeatures.png"
+height="150">
+
 
 The
 [`QFeatures`](https://rformassspectrometry.github.io/QFeatures/articles/QFeatures.html)
