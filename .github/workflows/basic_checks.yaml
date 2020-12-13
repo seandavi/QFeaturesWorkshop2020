@@ -1,4 +1,10 @@
 on: [push]
+
+# Increment this version when we want to clear cache
+env:
+  cache-version: v1
+  RPSM: https://packagemanager.rstudio.com/cran/__linux__/xenial/latest
+
 jobs:
   job1:
     runs-on: ubuntu-latest
@@ -19,8 +25,8 @@ jobs:
         uses: actions/cache@v1
         with:
           path: /usr/local/lib/R/site-library
-          key: ${{ runner.os }}-r-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-r-1-
+          key: ${{ env.cache-version }}-${{ runner.os }}-r-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ env.cache-version}}-${{ runner.os }}-r-
 
       # This lets us augment with additional dependencies
       - name: Install system dependencies
