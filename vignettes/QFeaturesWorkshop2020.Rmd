@@ -13,7 +13,7 @@ bibliography: refs.bib
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
   echo = TRUE,
   message = FALSE
 )
