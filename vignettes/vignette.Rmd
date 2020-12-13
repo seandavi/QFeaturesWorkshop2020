@@ -13,3 +13,10 @@ vignette: >
 **Learning Objectives** The goals of this workshop are to provide a
 real-life example of step-by-step quantitative proteomics data
 analysis using the `QFeatures` package.
+
+
+## Session information
+
+```{r si}
+sessionInfo()
+```
