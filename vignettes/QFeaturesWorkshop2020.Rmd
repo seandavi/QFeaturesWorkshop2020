@@ -1,42 +1,29 @@
 ---
-title: "Quantitative proteomics data analysis with QFeatures"
+title: "An Example Workshop"
 author: Laurent Gatto
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{QFeatures EuroBioc2020 Workshop}
+  %\VignetteIndexEntry{An Example Workshop}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-bibliography: refs.bib
 ---
 
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  echo = TRUE,
-  message = FALSE
+  comment = "#>"
 )
 ```
 
 
-## Introduction
+## Overview
 
-**Learning Objectives** The goals of this workshop are to provide a
-real-life example of step-by-step quantitative proteomics data
-analysis using the `QFeatures` package.
+### Description
 
-Mass spectrometry-based quantitative proteomics data can be
-representated as a matrix of quantitative values for features (PSMs,
-peptides, proteins) arranged along the rows, measured for a set of
-samples, arranged along the columns. The is a common representation
-for any quantitative data set. We will be using the
-`SummarizedExperiment` class:
-
-
-## Session information
-
-```{r}
-sessionInfo()
-```
-
+Along with the topic of your workshop, include how students can expect
+to spend their time. For the description may also include information
+about what type of workshop it is (e.g. instructor-led live demo, lab,
+lecture + lab, etc.). Instructors are strongly recommended to provide
+completely worked examples for lab sessions, and a set of stand-alone
+notes that can be read and understood outside of the workshop.
