@@ -3,14 +3,13 @@ on: [push]
 # Increment this version when we want to clear cache
 env:
   cache-version: v1
-  RPSM: https://packagemanager.rstudio.com/cran/__linux__/focal/latest
 
 jobs:
   job1:
     runs-on: ubuntu-latest
     container: bioconductor/bioconductor_docker:devel
     env:
-      RSPM: ${{ env.RSPM }}
+      RSPM: https://packagemanager.rstudio.com/cran/__linux__/focal/latest
     steps:
       - uses: actions/checkout@v1
 
