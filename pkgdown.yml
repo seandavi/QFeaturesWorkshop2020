@@ -1,0 +1,10 @@
+pandoc: 2.7.3
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  vignette: vignette.html
+last_built: 2020-12-13T22:00Z
+urls:
+  reference: https://lgatto.github.io/QFeaturesWorkshop2020/reference
+  article: https://lgatto.github.io/QFeaturesWorkshop2020/articles
+
