@@ -1,0 +1,15 @@
+---
+title: "Quantitative proteomics data analysis with QFeatures"
+author: Laurent Gatto
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Quantitative proteomics data analysis with QFeatures}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Introduction
+
+**Learning Objectives** The goals of this workshop are to provide a
+real-life example of step-by-step quantitative proteomics data
+analysis using the `QFeatures` package.
